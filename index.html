@@ -38,6 +38,8 @@
             position: relative;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body::before {
@@ -281,14 +283,6 @@
             font-size: 16px;
         }
 
-        @media (max-width: 600px) {
-            .map-link {
-                margin-left: 0 !important;
-                width: 100%;
-                justify-content: center;
-            }
-        }
-
         .additional-info {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -441,7 +435,184 @@
             }
 
             body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 35px 20px;
+                border-radius: 25px;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 36px;
+                line-height: 1.1;
+            }
+
+            .subtitle {
+                font-size: 15px;
+            }
+
+            .cake-icon {
+                font-size: 65px;
+            }
+
+            .header {
+                margin-bottom: 35px;
+            }
+
+            .info-section {
+                padding: 20px 18px;
+                margin: 30px 0;
+            }
+
+            .info-item {
+                font-size: 13px;
+                margin: 14px 0;
+            }
+
+            .info-icon {
+                font-size: 20px;
+                width: 28px;
+                margin-right: 10px;
+            }
+
+            .info-label {
+                font-size: 13px;
+            }
+
+            .info-value {
+                font-size: 13px;
+            }
+
+            .map-link {
+                font-size: 12px;
+                padding: 10px 14px;
+                margin-left: 0 !important;
+                margin-top: 10px;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .additional-info {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin: 30px 0;
+            }
+
+            .info-card {
+                padding: 18px 16px;
+            }
+
+            .info-card-title {
+                font-size: 17px;
+            }
+
+            .info-card-content {
+                font-size: 13px;
+                line-height: 1.7;
+            }
+
+            .rsvp-section {
+                margin-top: 35px;
+            }
+
+            .rsvp-title {
+                font-size: 26px;
+                margin-bottom: 22px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            label {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+
+            input[type="text"],
+            textarea {
+                padding: 13px 16px;
+                font-size: 14px;
+                border-radius: 14px;
+            }
+
+            textarea {
+                min-height: 90px;
+            }
+
+            .radio-group {
+                gap: 10px;
+            }
+
+            .radio-label {
+                padding: 16px 10px;
+                font-size: 13px;
+                border-radius: 14px;
+            }
+
+            .radio-emoji {
+                font-size: 26px;
+            }
+
+            .submit-btn {
+                padding: 16px;
+                font-size: 15px;
+                letter-spacing: 1px;
+                margin-top: 20px;
+            }
+
+            .success-message {
+                padding: 18px;
+                font-size: 13px;
+                margin-top: 20px;
+            }
+
+            .success-message h3 {
+                font-size: 18px;
+                margin-bottom: 6px;
+            }
+
+            .footer {
+                font-size: 13px;
+                margin-top: 30px;
+            }
+
+            /* Hide sparkles di mobile untuk hemat performa */
+            .sparkle {
+                display: none;
+            }
+
+            /* Reduce confetti di mobile */
+            .confetti {
+                width: 6px;
+                height: 6px;
+            }
+        }
+
+        /* Untuk layar sangat kecil */
+        @media (max-width: 374px) {
+            .container {
+                padding: 30px 15px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .cake-icon {
+                font-size: 55px;
+            }
+
+            .info-section,
+            .info-card {
                 padding: 15px;
+            }
+
+            .radio-label {
+                padding: 14px 8px;
+                font-size: 12px;
             }
         }
 
@@ -763,7 +934,7 @@
                     <span class="info-label">Tempat:</span>
                     <span class="info-value">Ganesha Cafe</span>
                 </div>
-                <a href="https://maps.app.goo.gl/ZpteRXnvnH64yKJV6" target="_blank" class="map-link" style="margin-left: 53px;">
+                <a href="https://maps.app.goo.gl/ZpteRXnvnH64yKJV6" target="_blank" class="map-link">
                     <i class="fa-solid fa-map-location-dot"></i>
                     Buka di Google Maps
                 </a>
@@ -780,6 +951,7 @@
                     <strong>Formal / Semi-Formal</strong><br>
                     Pria: Kemeja & celana bahan<br>
                     Wanita: Dress atau blouse & rok/celana
+                    Color : Putih (bisa mix hitam/pink)
                 </div>
             </div>
 
@@ -789,7 +961,7 @@
                     Note
                 </div>
                 <div class="info-card-content">
-                    Mohon konfirmasi kehadiran paling lambat <strong>3 hari sebelum acara</strong>. Terima kasih!
+                    Mohon bukti konfirmasi kehadiran jangan hilang untuk ditukar souvenir dan <strong>wajib membawa gift ya</strong>. Terima kasih!
                 </div>
             </div>
         </div>
@@ -851,7 +1023,11 @@
         // Create floating confetti
         function createConfetti() {
             const colors = ['#D4AF37', '#F4E5C2', '#B8941E', '#E5D68A', '#FFD700'];
-            for (let i = 0; i < 40; i++) {
+            // Reduce confetti count on mobile
+            const isMobile = window.innerWidth <= 600;
+            const count = isMobile ? 20 : 40;
+            
+            for (let i = 0; i < count; i++) {
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 confetti.style.left = Math.random() * 100 + '%';
